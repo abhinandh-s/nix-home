@@ -2,7 +2,6 @@
   description = "Home Manager configuration of abhi";
 
   inputs = {
-    # Specify the source of Home Manager and Nixpkgs.
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -12,7 +11,7 @@
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-      nix-fonts = {
+    nix-fonts = {
       url = "github:abhinandh-s/nix-fonts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
@@ -27,18 +26,16 @@
       {
       homeConfigurations."abhi" = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
-
-        # Specify your home configuration modules here, for example,
-        # the path to your home.nix.
-        modules = [ ./home.nix
-                  sops-nix.homeManagerModules.sops
-
+   
+        modules = [
+          ./home.nix
+          sops-nix.homeManagerModules.sops
         ];
+        
         extraSpecialArgs = {
+          performFullSetup = true;
           inherit inputs;
         };
-        # Optionally use extraSpecialArgs
-        # to pass through arguments to home.nix
       };
     };
 }

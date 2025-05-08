@@ -1,32 +1,30 @@
-{ config, pkgs, inputs, ... }:
+{ config, pkgs, inputs, performFullSetup, ... }:
 let
   fonts = inputs.nix-fonts.packages;
 in {
 
   imports = [
     ./secrets
-  ];
+  ] ++ (if performFullSetup then [
+      ./mod
+    ] else []);
 
   home.username = "abhi";
   home.homeDirectory = "/home/abhi";
   home.stateVersion = "24.11"; 
 
   home.packages = with pkgs; [
+    xsel # for clipboard
+    xclip
+    xdotool
+    pinentry-all
     neovim
-    lua-language-server
+    just
     nixd
-    # nerd-fonts.FiraCode
-    # nerd-fonts.FiraMono
-    # nerd-fonts.JetBrainsMono
-    # nerd-fonts.NerdFontsSymbolsOnly
-
     (pkgs.writeShellScriptBin "my-hello" ''
       echo "Hello, ${config.home.username}!"
       '')
-  ] ++ (with pkgs; [
-      firefox-bin
-      zoxide
-    ]);
+  ];
 
   fonts.fontconfig.enable = true;
 
@@ -35,12 +33,12 @@ in {
     enable = true;
     userName = "abhi";
     userEmail = "ugabhi@proton.me";
-    };
+  };
 
   home.file = {
     # ".screenrc".source = dotfiles/screenrc;
     ".cargo/config.toml".text = ''[build]
-target-dir = "~/.cargo/__cache/target"
+target-dir = ".cargo/__cache/target"
     '';
   };
 
