@@ -1,11 +1,11 @@
-# https://samleathers.com/posts/2022-02-11-my-new-network-and-sops.html
+/*
+https://samleathers.com/posts/2022-02-11-my-new-network-and-sops.html
+*/
 {
 ...
-}:
-let
-  mode = "0600";
-in
-  {
+}: let
+  mode = "0600"; # owner = rw- | group = --- | others = --- 
+in {
   sops = {
     age.keyFile = "/home/abhi/.config/sops/age/keys.txt"; 
     defaultSopsFile = ./secrets.yaml;
@@ -16,23 +16,23 @@ in
       };
       github_ssh_key = {
         path = "/home/abhi/.ssh/id_ed25519";
-        mode = "0600"; # owner = rw- , group = ---, others = --- 
+        inherit mode;
       };
       mobile_ssh_key = {
         path = "/home/abhi/.ssh/id_rsa";
-        mode = "0644";
+        inherit mode;
       };
       "kde_connect/trusted_device_keys" = {
         path = "/home/abhi/.config/kdeconnect/trusted_devices";
-        mode = "0644";
+        inherit mode;
       };
       "kde_connect/certificate_pem" = {
         path = "/home/abhi/.config/kdeconnect/certificate.pem";
-        mode = "0644";
+        inherit mode;
       };
       "kde_connect/privateKey_pem" = {
         path = "/home/abhi/.config/kdeconnect/privateKey.pem";
-        mode = "0644";
+        inherit mode;
       };
     };
   };
