@@ -26,6 +26,7 @@
     packages = with pkgs; [
       rnote
       evince
+      sops
       neovim
       fzf
       lazygit

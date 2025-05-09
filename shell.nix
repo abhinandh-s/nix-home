@@ -7,6 +7,7 @@ with pkgs;
       just
       neovim
       tmux
+      sops
     ];
 
     GREETING = "Environment is ready!";

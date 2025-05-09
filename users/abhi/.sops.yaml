@@ -1,7 +1,7 @@
 keys:
   - &abhi age1jmcmqq4jpzcutzeajxavlapee57rhp3gzprlc5se8vvsk9ej3ezq7nh94p
 creation_rules:
-  - path_regex: ./user/abhi/secrets/secrets.yaml$
+  - path_regex: ./secrets/secrets.yaml$
     key_groups:
     - age:
       - *abhi
