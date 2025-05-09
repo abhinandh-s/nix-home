@@ -17,25 +17,31 @@
     };
   };
 
-  outputs = inputs @ 
-    { nixpkgs, home-manager, nix-fonts, sops-nix, ... }:
-    let
-      system = "x86_64-linux";
-      pkgs = nixpkgs.legacyPackages.${system};
-    in
-      {
-      homeConfigurations."abhi" = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-   
-        modules = [
-          ./home.nix
-          sops-nix.homeManagerModules.sops
-        ];
-        
-        extraSpecialArgs = {
-          performFullSetup = true;
-          inherit inputs;
+  outputs = inputs @ {
+    nixpkgs,
+    home-manager,
+    sops-nix,
+    ...
+  }: let
+    system = "x86_64-linux";
+    pkgs = nixpkgs.legacyPackages.${system};
+  in {
+    homeConfigurations."abhi" = home-manager.lib.homeManagerConfiguration {
+      inherit pkgs;
+
+      modules = [
+        ./home.nix
+        sops-nix.homeManagerModules.sops
+      ];
+
+      extraSpecialArgs = {
+        performFullSetup = true;
+        inherit inputs;
+        userSettings = {
+          name = "abhi";
+          email = "ugabhi@proton.me";
         };
       };
     };
+  };
 }

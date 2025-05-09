@@ -1,45 +1,26 @@
-{ config, pkgs, inputs, performFullSetup, ... }:
-let
-  fonts = inputs.nix-fonts.packages;
-in {
-
+{userSettings, ...}: {
   imports = [
     ./secrets
-  ] ++ (if performFullSetup then [
-      ./mod
-    ] else []);
-
-  home.username = "abhi";
-  home.homeDirectory = "/home/abhi";
-  home.stateVersion = "24.11"; 
-
-  home.packages = with pkgs; [
-    alacritty
-    xsel # for clipboard
-    xclip
-    xdotool
-    pinentry-all
-    neovim
-    just
-    nixd
-    (pkgs.writeShellScriptBin "my-hello" ''
-      echo "Hello, ${config.home.username}!"
-      '')
+    ./lib
+    ./mod
   ];
+
+  home.username = userSettings.name;
+  home.homeDirectory = "/home/" + userSettings.name;
+  home.stateVersion = "24.11";
 
   fonts.fontconfig.enable = true;
 
-
   programs.git = {
     enable = true;
-    userName = "abhi";
-    userEmail = "ugabhi@proton.me";
+    userName = userSettings.name;
+    userEmail = userSettings.email;
   };
 
   home.file = {
     # ".screenrc".source = dotfiles/screenrc;
-    ".cargo/config.toml".text = ''[build]
-target-dir = ".cargo/__cache/target"
+    ".cargo/config.toml".text = ''      [build]
+      target-dir = ".cargo/__cache/target"
     '';
   };
 
