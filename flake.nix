@@ -44,6 +44,23 @@
           };
         };
       };
+          elliot = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
+
+        modules = [
+          ./users/elliot/home.nix
+          sops-nix.homeManagerModules.sops
+        ];
+
+        extraSpecialArgs = {
+          performFullSetup = true;
+          inherit inputs;
+          userSettings = {
+            name = "elliot";
+            email = "ugabhi@proton.me";
+          };
+        };
+      };
     };
     devShells.${system}.default = import ./shell.nix {inherit pkgs;};
   };

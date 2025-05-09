@@ -3,6 +3,7 @@ with pkgs;
   mkShell {
     buildInputs = [
       git
+      home-manager
       just
       neovim
       tmux
