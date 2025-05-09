@@ -45,5 +45,6 @@
         };
       };
     };
+    devShells.${system}.default = import ./shell.nix {inherit pkgs;};
   };
 }

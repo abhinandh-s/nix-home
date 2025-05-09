@@ -1,1 +1,3 @@
-# Home Manager configuration of Abhi on linux mint
+# Nix Mint 
+
+Home Manager configuration of Abhi on linux mint
