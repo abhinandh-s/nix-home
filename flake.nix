@@ -26,20 +26,22 @@
     system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
   in {
-    homeConfigurations."abhi" = home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
+    homeConfigurations = {
+      abhi = home-manager.lib.homeManagerConfiguration {
+        inherit pkgs;
 
-      modules = [
-        ./home.nix
-        sops-nix.homeManagerModules.sops
-      ];
+        modules = [
+          ./users/abhi/home.nix
+          sops-nix.homeManagerModules.sops
+        ];
 
-      extraSpecialArgs = {
-        performFullSetup = true;
-        inherit inputs;
-        userSettings = {
-          name = "abhi";
-          email = "ugabhi@proton.me";
+        extraSpecialArgs = {
+          performFullSetup = true;
+          inherit inputs;
+          userSettings = {
+            name = "abhi";
+            email = "ugabhi@proton.me";
+          };
         };
       };
     };

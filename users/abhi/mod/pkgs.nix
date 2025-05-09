@@ -37,6 +37,7 @@
       anki-bin
       alejandra
       telegram-desktop
+      tree
       (writeShellScriptBin "ff"
         /*
         bash
