@@ -2,6 +2,8 @@
   description = "Home Manager configuration of abhi";
 
   inputs = {
+   
+    unstable-nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -15,16 +17,35 @@
       url = "github:abhinandh-s/nix-fonts";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
     nixpkgs,
+    unstable-nixpkgs,
     home-manager,
     sops-nix,
+    rust-overlay,
     ...
   }: let
+      randomNumber = builtins.readFile ./random.txt; # to keep home-manager.backupFileExtension happy
     system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
+      # pkgs = nixpkgs.legacyPackages.${system};
+        overlays = [
+          (import rust-overlay)
+          (final: prev: {
+            unstable = import unstable-nixpkgs {
+              inherit system;
+              config.allowUnfree = true;
+            };
+          })
+        ];
+        pkgs = import nixpkgs {
+          inherit system overlays;
+        };
   in {
     homeConfigurations = {
       abhi = home-manager.lib.homeManagerConfiguration {
@@ -53,7 +74,7 @@
         ];
 
         extraSpecialArgs = {
-          performFullSetup = true;
+          performFullSetup = false;
           inherit inputs;
           userSettings = {
             name = "elliot";

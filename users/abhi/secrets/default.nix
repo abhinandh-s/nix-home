@@ -8,6 +8,11 @@ in {
     age.keyFile = config.home.homeDirectory + "/.config/sops/age/keys.txt";
     defaultSopsFile = ./secrets.yaml;
     secrets = {
+      abhi-cargo-token = { };
+      cargo-token = {
+        path = config.home.homeDirectory + "/.cargo/credentials.toml";
+        inherit mode;
+      };
       y-key = {
         path = config.home.homeDirectory + "/.local/share/age/key.txt";
         inherit mode;

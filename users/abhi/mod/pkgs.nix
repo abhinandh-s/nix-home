@@ -1,16 +1,21 @@
 {
   pkgs,
   performFullSetup,
-  ...
+...
 }: {
   home.packages = with pkgs; [
     alacritty
     xsel # for clipboard
     xclip
     pinentry-all
+    gcc
+    neovim    
     vim
     tmux
     just
+    sops
+    unstable.rust-analyzer
+    rust-bin.stable.latest.default
   ];
 
   # this is a custom option declared in lib/optional.nix
@@ -30,7 +35,6 @@
       fzf
       lazygit
       xdotool
-      firefox-bin
       zoxide
       lua-language-server
       nixd

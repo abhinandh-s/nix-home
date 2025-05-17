@@ -1,8 +1,14 @@
-{userSettings, ...}: {
+{
+  userSettings,
+  config,
+  ...
+}: 
+{
   imports = [
     ./secrets
     ./lib
     ./mod
+    ./dev.nix
   ];
 
   home.username = userSettings.name;
@@ -24,8 +30,13 @@
     '';
   };
 
+  # sops.templates."your-config-with-secrets.toml".content = ''
+  #   password = "${config.sops.secrets.cargo-token}"
+  # '';
+
   home.sessionVariables = {
     EDITOR = "nvim";
+    # CARGO_REGISTRY_TOKEN = "${config.sops.secrets.cargo-token}";
   };
   programs.home-manager.enable = true;
 }
