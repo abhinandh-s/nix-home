@@ -77,6 +77,8 @@
     pinentry = {
       package = pkgs.pinentry-curses; # or `pinentry-tty` if you're super minimal
     };
+    defaultCacheTtl = 2592000;
+    maxCacheTtl = 2592000; # ~ 1 month
     enableSshSupport = false; # or true if you want to use GPG for SSH
     extraConfig = ''
       allow-loopback-pinentry
