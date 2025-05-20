@@ -55,7 +55,7 @@
   programs.git = {
     enable = true;
     userName = userSettings.name;
-    userEmail = userSettings.email;
+    userEmail = userSettings.email.personal;
     signing = {
       signByDefault = true;
       key = "55BBE35CA185AD09";

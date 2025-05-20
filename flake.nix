@@ -2,7 +2,6 @@
   description = "Home Manager configuration of abhi";
 
   inputs = {
-   
     unstable-nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     home-manager = {
@@ -31,21 +30,21 @@
     rust-overlay,
     ...
   }: let
-      randomNumber = builtins.readFile ./random.txt; # to keep home-manager.backupFileExtension happy
+    randomNumber = builtins.readFile ./random.txt; # to keep home-manager.backupFileExtension happy
     system = "x86_64-linux";
-      # pkgs = nixpkgs.legacyPackages.${system};
-        overlays = [
-          (import rust-overlay)
-          (final: prev: {
-            unstable = import unstable-nixpkgs {
-              inherit system;
-              config.allowUnfree = true;
-            };
-          })
-        ];
-        pkgs = import nixpkgs {
-          inherit system overlays;
+    # pkgs = nixpkgs.legacyPackages.${system};
+    overlays = [
+      (import rust-overlay)
+      (final: prev: {
+        unstable = import unstable-nixpkgs {
+          inherit system;
+          config.allowUnfree = true;
         };
+      })
+    ];
+    pkgs = import nixpkgs {
+      inherit system overlays;
+    };
   in {
     homeConfigurations = {
       abhi = home-manager.lib.homeManagerConfiguration {
@@ -61,11 +60,14 @@
           inherit inputs;
           userSettings = {
             name = "abhi";
-            email = "ugabhi@proton.me";
+            email = {
+              personal = "abhinandhsuby@proton.me";
+              dev = "ugabhi@proton.me";
+            };
           };
         };
       };
-          elliot = home-manager.lib.homeManagerConfiguration {
+      elliot = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
 
         modules = [
