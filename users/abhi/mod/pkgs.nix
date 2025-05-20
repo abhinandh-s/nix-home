@@ -11,6 +11,7 @@
     gcc
     neovim    
     vim
+    nemo-with-extensions
     tmux
     just
     sops
@@ -30,6 +31,8 @@
     enable = performFullSetup;
     packages = with pkgs; [
       rnote
+      tailwindcss-language-server
+      tailwindcss
       evince
       neovim
       fzf
