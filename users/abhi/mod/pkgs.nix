@@ -7,16 +7,13 @@
     alacritty
     xsel # for clipboard
     xclip
-    pinentry-all
     gcc
     neovim    
     vim
-    nemo-with-extensions
     tmux
     just
     sops
-    unstable.rust-analyzer
-    rust-bin.stable.latest.default
+
   ];
 
   # this is a custom option declared in lib/optional.nix
@@ -31,9 +28,13 @@
     enable = performFullSetup;
     packages = with pkgs; [
    #   rnote
-    #  tailwindcss-language-server
-     # tailwindcss
-     # evince
+    nemo-with-extensions
+          unstable.rust-analyzer
+    rust-bin.stable.latest.default
+     tailwindcss-language-server
+      tailwindcss
+      #  evince
+      emmet-language-server
       neovim
       fzf
       lazygit
@@ -42,7 +43,7 @@
       lua-language-server
       nixd
      # anki-bin
-     # alejandra
+      alejandra
      # telegram-desktop
       tree
       (writeShellScriptBin "ff"
