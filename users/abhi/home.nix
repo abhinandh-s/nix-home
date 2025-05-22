@@ -18,13 +18,14 @@
   programs.bash = {
     enable = true;
     bashrcExtra = /*bash*/''
+      . ~/.nix-profile/etc/profile.d/nix.sh
       export GPG_TTY=$(tty)
+      export CARGOT=$(cat ${config.sops.secrets."abhi-cargo-token".path});
       eval "$(zoxide init bash)"
       # Add /usr/local/mytools/bin to PATH if not already present
       if [[ ":$PATH:" != *":/home/abhi/.cargo/bin:"* ]]; then
         export PATH="/home/abhi/.cargo/bin:$PATH"
       fi
-
     '';
     # promptInit = ''
     #   # Provide a nice prompt if the terminal supports it.
@@ -134,7 +135,6 @@
   home.sessionVariables = {
     EDITOR = "nvim";
     GPG_TTY = "$(tty)";
-    # CARGO_REGISTRY_TOKEN = "${config.sops.secrets.cargo-token}";
   };
   programs.home-manager.enable = true;
 }

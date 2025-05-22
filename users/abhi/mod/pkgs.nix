@@ -30,20 +30,20 @@
   home.optional.packages = {
     enable = performFullSetup;
     packages = with pkgs; [
-      rnote
-      tailwindcss-language-server
-      tailwindcss
-      evince
+   #   rnote
+    #  tailwindcss-language-server
+     # tailwindcss
+     # evince
       neovim
       fzf
       lazygit
-      xdotool
+     # xdotool
       zoxide
       lua-language-server
       nixd
-      anki-bin
-      alejandra
-      telegram-desktop
+     # anki-bin
+     # alejandra
+     # telegram-desktop
       tree
       (writeShellScriptBin "ff"
         /*
