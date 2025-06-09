@@ -36,10 +36,13 @@
       #  evince
       emmet-language-server
       neovim
+      deno
       fzf
+      zathura
       lazygit
      # xdotool
       zoxide
+      typst
       lua-language-server
       nixd
      # anki-bin

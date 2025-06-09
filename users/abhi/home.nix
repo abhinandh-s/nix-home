@@ -26,7 +26,14 @@
       if [[ ":$PATH:" != *":/home/abhi/.cargo/bin:"* ]]; then
         export PATH="/home/abhi/.cargo/bin:$PATH"
       fi
-    '';
+      cd() {
+        builtin cd "$@" || return
+        if [[ -f .hook.sh && -x .hook.sh ]]; then
+          echo "running .hook.sh"
+          ./.hook.sh
+        fi
+      }
+      '';
     # promptInit = ''
     #   # Provide a nice prompt if the terminal supports it.
     #   if [ "$TERM" != "dumb" ] || [ -n "$INSIDE_EMACS" ]; then
