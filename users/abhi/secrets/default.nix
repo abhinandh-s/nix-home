@@ -17,6 +17,10 @@ in {
         path = config.home.homeDirectory + "/.local/share/age/key.txt";
         inherit mode;
       };
+      age-public-key = {
+        path = config.home.homeDirectory + "/.local/share/age/pub_key.txt";
+        inherit mode;
+      };
       github_ssh_key = {
         path = config.home.homeDirectory + "/.ssh/id_ed25519";
         inherit mode;

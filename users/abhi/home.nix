@@ -17,22 +17,38 @@
 
   programs.bash = {
     enable = true;
-    bashrcExtra = /*bash*/''
-      . ~/.nix-profile/etc/profile.d/nix.sh
-      export GPG_TTY=$(tty)
-      export CARGOT=$(cat ${config.sops.secrets."abhi-cargo-token".path});
-      eval "$(zoxide init bash)"
-      # Add /usr/local/mytools/bin to PATH if not already present
-      if [[ ":$PATH:" != *":/home/abhi/.cargo/bin:"* ]]; then
-        export PATH="/home/abhi/.cargo/bin:$PATH"
-      fi
-      cd() {
-        builtin cd "$@" || return
-        if [[ -f .hook.sh && -x .hook.sh ]]; then
-          echo "running .hook.sh"
-          ./.hook.sh
+    bashrcExtra =
+      /*
+      bash
+      */
+      ''
+          . ~/.nix-profile/etc/profile.d/nix.sh
+          export GPG_TTY=$(tty)
+
+        # Load secrets only if the files exist
+        if [[ -f ${config.sops.secrets."abhi-cargo-token".path} ]]; then
+          export CARGOT=$(<${config.sops.secrets."abhi-cargo-token".path})
         fi
-      }
+
+        if [[ -f ${config.sops.secrets."y-key".path} ]]; then
+          export AGE_PRIVATE_KEY=$(<${config.sops.secrets."y-key".path})
+        fi
+
+        if [[ -f ${config.sops.secrets."age-public-key".path} ]]; then
+          export AGE_PUBLIC_KEY=$(<${config.sops.secrets."age-public-key".path})
+        fi
+          eval "$(zoxide init bash)"
+          # Add /usr/local/mytools/bin to PATH if not already present
+          if [[ ":$PATH:" != *":/home/abhi/.cargo/bin:"* ]]; then
+            export PATH="/home/abhi/.cargo/bin:$PATH"
+          fi
+          cd() {
+            builtin cd "$@" || return
+            if [[ -f .hook.sh && -x .hook.sh ]]; then
+              echo "running .hook.sh"
+              ./.hook.sh
+            fi
+          }
       '';
     # promptInit = ''
     #   # Provide a nice prompt if the terminal supports it.
