@@ -1,19 +1,18 @@
 {
   pkgs,
   performFullSetup,
-...
+  ...
 }: {
   home.packages = with pkgs; [
     alacritty
     xsel # for clipboard
     xclip
     gcc
-    neovim    
+    neovim
     vim
     tmux
     just
     sops
-
   ];
 
   # this is a custom option declared in lib/optional.nix
@@ -27,12 +26,15 @@
   home.optional.packages = {
     enable = performFullSetup;
     packages = with pkgs; [
-   #   rnote
-    nemo-with-extensions
-          unstable.rust-analyzer
-    rust-bin.stable.latest.default
-     tailwindcss-language-server
+      #   rnote
+      nemo-with-extensions
+      unstable.rust-analyzer
+      rust-bin.stable.latest.default
       tailwindcss
+      tailwindcss-language-server
+      age
+      emmet-language-server
+      emmet-ls
       #  evince
       emmet-language-server
       neovim
@@ -40,14 +42,14 @@
       fzf
       zathura
       lazygit
-     # xdotool
+      # xdotool
       zoxide
       typst
       lua-language-server
       nixd
-     # anki-bin
+      # anki-bin
       alejandra
-     # telegram-desktop
+      # telegram-desktop
       tree
       (writeShellScriptBin "ff"
         /*
